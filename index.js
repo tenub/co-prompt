@@ -15,11 +15,12 @@ exports = module.exports = prompt;
  * Prompt for user input.
  */
 
-function prompt(msg){
+function prompt(msg, required = false){
   return function(done){
     process.stdout.write(msg);
     process.stdin.setEncoding('utf8');
     process.stdin.once('data', function(val){
+      if (required && !val.trim().length) return exports.prompt(msg, required)(done);
       done(null, val.trim());
     }).resume();
   }

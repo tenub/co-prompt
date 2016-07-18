@@ -20,10 +20,18 @@ function prompt(msg, required = false){
     process.stdout.write(msg);
     process.stdin.setEncoding('utf8');
     process.stdin.once('data', function(val){
-      if (required && !val.trim().length) return exports.prompt(msg, required)(done);
+      if (required && !val.trim().length) return prompt(msg, required)(done);
       done(null, val.trim());
     }).resume();
   }
+}
+
+/**
+ * Prompt for required user input.
+ */
+
+exports.required = function(msg){
+	return prompt(msg, true);
 }
 
 /**

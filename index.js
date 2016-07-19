@@ -72,6 +72,10 @@ exports.confirm = function(msg){
  */
 
 exports.password = function(msg, mask){
+	if (!process.stdin.isTTY) {
+    return exports.required(msg);
+	}
+
   mask = null == mask ? '*' : mask;
   return function(done){
     var buf = '';
